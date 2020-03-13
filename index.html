@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Clicker</title>
+  <link rel="stylesheet" href="/style/css.css">
+</head>
+<body>
+  <div class="align">
+    <div class="upgrades">
+      <div>
+        <p>Мои доходы</p>
+        <input id="money" type="text" readonly>
+      </div>
+      <div>
+        <button onclick="upgrade1()">Улучшить на 1</button>
+        <input id="firstup" type="text" readonly>
+        <br>
+        <button onclick="upgrade2()">Улучшить на 3</button>
+        <input id="secondup" type="text" readonly>
+        <br>
+        <button onclick="upgrade3()">Улучшить на 7</button>
+        <input id="thirdup" type="text" readonly>
+      </div>
+    </div>
+    <div class="button">
+      <p>Клик</p>
+      <button onclick="clicking()">Клик</button>
+      <input id="value" type="text" readonly>
+      <p>В секунду</p>
+      <input id="persecond" type="text" readonly>
+      <div id="error">Владос-падос</div>
+    </div>
+  </div>
+  <script src="/script.js"></script>
+</body>
+
+</html>
