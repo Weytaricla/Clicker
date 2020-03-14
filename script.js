@@ -1,40 +1,42 @@
-document.getElementById('money').value = 0 + "$"; //первоначальное значение в input
+document.getElementById('money').value = 0 + "$";                           //первоначальные значения в input
 document.getElementById('value').value = "+" + 1 + "$";
 document.getElementById('firstup').value = 10 + "$";
 document.getElementById('secondup').value = 20 + "$";
 document.getElementById('thirdup').value = 30 + "$";
 
-var plus = 1, //количество денег, прибавляющееся на клик
-    money = 0, //Общее количество денег
-    FirstCost = 10, //Изначальная цена улучшения
-    FirstValue = 1,//Изначальное значение приращение
+var MoneyPerClick = 1,                                                      //количество денег, прибавляющееся на клик
+    Money = 0,                                                              //Общее количество денег
+    FirstCost = 10,                                                         //Изначальные цены улучшений
     SecondCost = 20,
-    SecondValue = 2,
     ThirdCost = 30,
+    FirstValue = 1,                                                         //Изначальные значения приращения клика
+    SecondValue = 2,
     ThirdValue = 3,
-    MoneyPerSecond = 0, //доход в секунду
-    i = 0, //счётчики
-    i1 = 0,
-    i2 = 0;
+    MoneyPerSecond = 0,                                                     //доход в секунду
+    Level_of_fist_upgrade = 0,                                              //счётчики колтичества апгрейдов юнита
+    Level_of_second_upgrade = 0,
+    Level_of_third_upgrade = 0,
+    index,                                                                  //индекс апгрейда
+    ValueOfPerSecond                                                        //увеличение прироста в секунду юнита       
 
 
-function clicking() {  //функцйия клика
+function clicking() {                                                       //функцйия нажатия на кнопку клика
 
-    money = money + plus;
-    document.getElementById('money').value = money + "$";
-
-}
-
-function update(x) { //обновление значений
-
-    document.getElementById('money').value = money + "$";
-    document.getElementById('value').value = "+" + plus + "$";
-    MoneyPerSecond = MoneyPerSecond + x
-    document.getElementById('persecond').value = "+" + MoneyPerSecond + "$";
+    Money = Money + MoneyPerClick;
+    document.getElementById('money').value = Money + "$";
 
 }
 
-function error() { //сообщение о нехватке ресурса
+let timerId = setInterval(() => persecond(), 1000);                         //Интервал времени
+
+function persecond() {                                                      //Доход в секунду
+
+    Money = Money + MoneyPerSecond
+    document.getElementById('money').value = Money + "$"
+
+}
+
+function error() {                                                          //сообщение о нехватке ресурса
 
     document.getElementById('error').innerHTML = '<p style="color: red">Недостаточно денег</p>'
 
@@ -42,82 +44,71 @@ function error() { //сообщение о нехватке ресурса
 
 }
 
-function block() { //функция блокировки
-
-    document.getElementById('error').innerHTML = '<p style="color: red">Заблокировано</p>'
-
-    setTimeout(cancel, 1000);
-
-}
-
-function cancel() { //для остановки error и block
+function cancel() {                                                         //для того, чтобы убрать сообщение об ошибке
 
     document.getElementById('error').innerHTML = '<p>Владос-падос</p>';
 
 }
 
-function count(x, y) {  //расчёт увеличения цены
+function count(Cost, Owned) {                                               //расчёт увеличения цены юнита по формуле
 
-    return x = x + Math.round(1.07 ** y);
+    return Cost = Cost + Math.round(1.07 ** Owned);
 
 }
 
-function upgrade1() {   //улучшение 1
+function update(Cost, Value, Level, PerSecondValue, index) {                //функция апгрейда
 
-    if (money >= FirstCost) {
-        money = money - FirstCost
-        plus = plus + FirstValue
-        i = i + 1;
-        FirstCost = count(FirstCost, i)
-        document.getElementById('firstup').value = FirstCost + "$";
-        update(1);
+    if (Money >= Cost) {
+
+        Money = Money - Cost
+        MoneyPerClick = MoneyPerClick + Value
+        Level++
+        Cost = count(Cost, Level)
+        document.getElementById('money').value = Money + "$";
+        document.getElementById('value').value = "+" + MoneyPerClick + "$";
+        MoneyPerSecond = MoneyPerSecond + PerSecondValue
+        document.getElementById('persecond').value = "+" + MoneyPerSecond + "$";
+
+        switch (index) {
+            case 1:
+                FirstCost = Cost;
+                document.getElementById('firstup').value = FirstCost + "$";
+                break;
+            case 2:
+                SecondCost = Cost;
+                document.getElementById('secondup').value = SecondCost + "$";
+                break;
+            case 3:
+                ThirdCost = Cost;
+                document.getElementById('thirdup').value = ThirdCost + "$";
+                break;
+
+        }
     } else {
         error()
     }
+}
+
+function upgrade1() {                                                           //апгрейды
+
+    index = 1;
+    ValueOfPerSecond = 1;
+    update(FirstCost, FirstValue, Level_of_fist_upgrade, ValueOfPerSecond, index);
 
 }
 
-function upgrade2() {   //Улучшение 2
-    if (i > 0) {
-        if (money >= SecondCost) {
-            money = money - SecondCost
-            plus = plus + SecondValue
-            i1 = i1 + 1;
-            SecondCost = count(SecondCost, i1)
-            document.getElementById('secondup').value = SecondCost + "$";
-            update(3);
-        } else {
-            error()
-        }
-    } else {
-        block()
-    }
+function upgrade2() {
 
-}
-function upgrade3() {   //улучшение 3
-
-    if (i1 > 0) {
-        if (money >= ThirdCost) {
-            money = money - ThirdCost
-            plus = plus + ThirdValue
-            i2 = i2 + 1;
-            ThirdCost = count(ThirdCost, i2)
-            document.getElementById('thirdup').value = ThirdCost + "$";
-            update(7);
-        } else {
-            error()
-        }
-    } else {
-        block()
-    }
+    index = 2
+    ValueOfPerSecond = 3
+    update(SecondCost, SecondValue, Level_of_second_upgrade, ValueOfPerSecond, index);
 
 }
 
-let timerId = setInterval(() => persecond(), 1000); //Интервал для дохода в ед. времени
+function upgrade3() {
 
-function persecond() {  //Доход в секунду
-
-    money = money + MoneyPerSecond
-    document.getElementById('money').value = money + "$"
+    index = 3
+    ValueOfPerSecond = 7
+    update(ThirdCost, ThirdValue, Level_of_third_upgrade, ValueOfPerSecond, index);
 
 }
