@@ -6,18 +6,9 @@ document.getElementById('thirdup').value = 30 + "$";
 
 var MoneyPerClick = 1,                                                      //количество денег, прибавляющееся на клик
     Money = 0,                                                              //Общее количество денег
-    FirstCost = 10,                                                         //Изначальные цены улучшений
-    SecondCost = 20,
-    ThirdCost = 30,
-    FirstValue = 1,                                                         //Изначальные значения приращения клика
-    SecondValue = 2,
-    ThirdValue = 3,
-    MoneyPerSecond = 0,                                                     //доход в секунду
-    Level_of_fist_upgrade = 0,                                              //счётчики колтичества апгрейдов юнита
-    Level_of_second_upgrade = 0,
-    Level_of_third_upgrade = 0,
+    MoneyPerSecond = 0,                                           
     index,                                                                  //индекс апгрейда
-    ValueOfPerSecond                                                        //увеличение прироста в секунду юнита       
+    ValueOfPerSecond;                                                        //увеличение прироста в секунду юнита       
 
 
 function clicking() {                                                       //функцйия нажатия на кнопку клика
@@ -89,13 +80,22 @@ function update(Cost, Value, Level, PerSecondValue, index) {                //ф
     }
 }
 
-function upgrade1() {                                                           //апгрейды
+var FirstCost = 10, 
+    FirstValue = 1,
+    Level_of_fist_upgrade = 0;       
+
+function upgrade1() {                                                        
 
     index = 1;
     ValueOfPerSecond = 1;
     update(FirstCost, FirstValue, Level_of_fist_upgrade, ValueOfPerSecond, index);
 
 }
+
+var SecondCost = 20,
+    SecondValue = 2,
+    Level_of_second_upgrade = 0;
+
 
 function upgrade2() {
 
@@ -104,6 +104,10 @@ function upgrade2() {
     update(SecondCost, SecondValue, Level_of_second_upgrade, ValueOfPerSecond, index);
 
 }
+
+var ThirdCost = 30,
+    ThirdValue = 3,
+    Level_of_third_upgrade = 0;
 
 function upgrade3() {
 
