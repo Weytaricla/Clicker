@@ -8,34 +8,64 @@
   <title>Clicker</title>
   <link rel="stylesheet" href="/style/css.css">
 </head>
+
 <body>
-  <div class="align">
-    <div class="upgrades">
-      <div>
-        <p>Мои доходы</p>
-        <input id="money" type="text" readonly>
+  <div class="background">
+    <div class="name">
+      <div class="bank">
+        <p class="name">Банк:</p>
+        <div class="window" id="money"></div>
       </div>
-      <div>
-        <button onclick="upgrade1()">Кулак</button>
-        <input id="firstup" type="text" readonly>
-        <br>
-        <button onclick="upgrade2()">Молоток</button>
-        <input id="secondup" type="text" readonly>
-        <br>
-        <button onclick="upgrade3()">Кувалда</button>
-        <input id="thirdup" type="text" readonly>
+      <div class="clearfix"></div>
+      <div class="upgrades">
+        <div onclick="upgrade1()" onmousedown="return false" class="unit">
+          <div class="button name">Upgrade_1
+          </div>
+          <div class="window" id="firstup"></div>
+        </div>
+        <div onclick="upgrade2()" onmousedown="return false" class="unit">
+          <div class="button name"">Upgrade_2</div>
+          <div class=" window" id="secondup"></div>
+        </div>
+        <div onclick="upgrade3()" onmousedown="return false" class="unit">
+          <div class="button name">Upgrade_3</div>
+          <div class="window" id="thirdup"></div>
+        </div>
+        <div onclick="" onmousedown="return false" class="unit">
+          <div class="button name">Upgrade_4</div>
+          <div class="window" id="firstup"></div>
+        </div>
+        <div onclick="" onmousedown="return false" class="unit">
+          <div class="button name"">Upgrade_5</div>
+          <div class=" window" id="secondup"></div>
+        </div>
+        <div onclick="" onmousedown="return false" class="unit">
+          <div class="button name">Upgrade_6</div>
+          <div class="window" id="thirdup"></div>
+        </div>
+        <div onclick="" onmousedown="return false" class="unit">
+          <div class="button name">Upgrade_7</div>
+          <div class="window" id="firstup"></div>
+        </div>
+        <div onclick="" onmousedown="return false" class="unit">
+          <div class="button name"">Upgrade_8</div>
+        <div class=" window" id="secondup"></div>
+        </div>
+        <div onclick="" onmousedown="return false" class="unit">
+          <div class="button name">Upgrade_9</div>
+          <div class="window" id="thirdup"></div>
+        </div>
       </div>
     </div>
-    <div class="button">
-      <p>Клик</p>
-      <button onclick="clicking()">Клик</button>
-      <input id="value" type="text" readonly>
-      <p>В секунду</p>
-      <input id="persecond" type="text" readonly>
-      <div id="error">Владос-падос</div>
+    <div class="window">
+      <div>Клик</div>
+      <div>В секунду</div>
+      <div id="persecond"></div>
+      <div id="error">Кликай кнопку</div>
+      <div class="clickbutton" onmousedown="return false" onclick="clicking()">Клик</div>
     </div>
-  </div>
-  <script src="/script.js"></script>
+    <button onclick="time()">Время X2 </button>
+    <script src="/script.js"></script>
 </body>
 
 </html>

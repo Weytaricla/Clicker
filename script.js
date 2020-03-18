@@ -1,20 +1,15 @@
-document.getElementById('money').value = 0 + "$";                           //первоначальные значения в input
-document.getElementById('value').value = "+" + 1 + "$";
-document.getElementById('firstup').value = 10 + "$";
-document.getElementById('secondup').value = 20 + "$";
-document.getElementById('thirdup').value = 30 + "$";
+'use strict'
 
 var MoneyPerClick = 1,                                                      //количество денег, прибавляющееся на клик
     Money = 0,                                                              //Общее количество денег
     MoneyPerSecond = 0,                                           
     index,                                                                  //индекс апгрейда
-    ValueOfPerSecond;                                                        //увеличение прироста в секунду юнита       
-
+    ValueOfPerSecond;
 
 function clicking() {                                                       //функцйия нажатия на кнопку клика
 
     Money = Money + MoneyPerClick;
-    document.getElementById('money').value = Money + "$";
+    document.getElementById('money').innerHTML = '<p>' + Money + '$</p>'
 
 }
 
@@ -23,7 +18,7 @@ let timerId = setInterval(() => persecond(), 1000);                         //И
 function persecond() {                                                      //Доход в секунду
 
     Money = Money + MoneyPerSecond
-    document.getElementById('money').value = Money + "$"
+    document.getElementById('money').innerHTML = '<p>' + Money + '$</p>'
 
 }
 
@@ -37,7 +32,7 @@ function error() {                                                          //с
 
 function cancel() {                                                         //для того, чтобы убрать сообщение об ошибке
 
-    document.getElementById('error').innerHTML = '<p>Владос-падос</p>';
+    document.getElementById('error').innerHTML = '<p>Кликай кнопку</p>';
 
 }
 
@@ -55,23 +50,25 @@ function update(Cost, Value, Level, PerSecondValue, index) {                //ф
         MoneyPerClick = MoneyPerClick + Value
         Level++
         Cost = count(Cost, Level)
-        document.getElementById('money').value = Money + "$";
-        document.getElementById('value').value = "+" + MoneyPerClick + "$";
+        document.getElementById('money').innerHTML = '<p>' + Money + '$</p>'
         MoneyPerSecond = MoneyPerSecond + PerSecondValue
-        document.getElementById('persecond').value = "+" + MoneyPerSecond + "$";
+        document.getElementById('persecond').innerHTML = '<p>+' + MoneyPerSecond + '$</p>'
 
         switch (index) {
             case 1:
+                Level_of_fist_upgrade++;
                 FirstCost = Cost;
-                document.getElementById('firstup').value = FirstCost + "$";
+                document.getElementById('firstup').innerHTML = '<p>' + FirstCost + '$</p>'
                 break;
             case 2:
+                Level_of_second_upgrade++;
                 SecondCost = Cost;
-                document.getElementById('secondup').value = SecondCost + "$";
+                document.getElementById('secondup').innerHTML = '<p>' + SecondCost + '$</p>'
                 break;
             case 3:
+                Level_of_third_upgrade++;
                 ThirdCost = Cost;
-                document.getElementById('thirdup').value = ThirdCost + "$";
+                document.getElementById('thirdup').innerHTML = '<p>' + ThirdCost + '$</p>'
                 break;
 
         }
@@ -116,3 +113,9 @@ function upgrade3() {
     update(ThirdCost, ThirdValue, Level_of_third_upgrade, ValueOfPerSecond, index);
 
 }
+
+    document.getElementById('money').innerHTML = '<p>' + Money + '$</p>'    //первоначальные значения в input
+    document.getElementById('firstup').innerHTML = '<p>' + FirstCost + '$</p>'
+    document.getElementById('secondup').innerHTML = '<p>' + SecondCost + '$</p>'
+    document.getElementById('thirdup').innerHTML = '<p>' + ThirdCost + '$</p>'
+    document.getElementById('persecond').innerHTML = '<p>+' + MoneyPerSecond + '$</p>'

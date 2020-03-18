@@ -2,11 +2,70 @@
     margin: 0;
     padding: 0;
     text-decoration: none;
+    color: #000;
 }
 body{
-    margin-top: 100px;
+    margin-top: 100px;    
 }
-.align{
-    width: 600px;
+.background{
+    width: 400px;
     margin: 0 auto;
+    height: 300px;
+    padding: 100px;
+   /* background-image: url(/282dc0b660cfa94b0053704437e2f1f1.jpg); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: rgb(180, 179, 179);
+}
+.bank{
+    width: 120px;
+    height: 20px;
+    background-color: rgb(194, 194, 194);
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 3px;
+}
+.name{
+    float: left;
+}
+.window{
+    float: right;
+}
+.clearfix{
+    clear: both;
+}
+.unit{
+    width: 120px;
+    height: 20px;
+    background-color: rgb(187, 87, 187);
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px 5px;
+    cursor: pointer;
+}
+.upgrades{
+    width: 150px;
+    height: 200px;
+    overflow-y: scroll;
+    /* overflow: hidden; */
+}
+.clickbutton{
+    width: 200px;
+    background-color: rgb(175, 230, 89);
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px 10px;
+    text-align: center;
+    cursor: pointer;
+}
+#persecond{
+    width: 215px;
+    height: 20px;
+    background-color: rgb(197, 197, 197);
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 2px;
+    cursor: pointer;
+    text-align: right;
 }
