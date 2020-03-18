@@ -13,12 +13,22 @@ function clicking() {                                                       //ф
 
 }
 
-let timerId = setInterval(() => persecond(), 1000);                         //Интервал времени
+var time = 1000;
+
+function TimerUpgrade(){
+    time = Math.round(time/2);
+    clearInterval(timerId);
+    timerId = setInterval(() => persecond(), time);
+    console.log(time)
+}
+
+var timerId = setInterval(() => persecond(), time);
 
 function persecond() {                                                      //Доход в секунду
 
     Money = Money + MoneyPerSecond
     document.getElementById('money').innerHTML = '<p>' + Money + '$</p>'
+    console.log(timerId)  
 
 }
 
@@ -28,11 +38,11 @@ function error() {                                                          //с
 
     setTimeout(cancel, 1000);
 
-}
+    function cancel() {                                                         //для того, чтобы убрать сообщение об ошибке
 
-function cancel() {                                                         //для того, чтобы убрать сообщение об ошибке
-
-    document.getElementById('error').innerHTML = '<p>Кликай кнопку</p>';
+        document.getElementById('error').innerHTML = '<p>Кликай кнопку</p>';
+    
+    }
 
 }
 
@@ -53,6 +63,7 @@ function update(Cost, Value, Level, PerSecondValue, index) {                //ф
         document.getElementById('money').innerHTML = '<p>' + Money + '$</p>'
         MoneyPerSecond = MoneyPerSecond + PerSecondValue
         document.getElementById('persecond').innerHTML = '<p>+' + MoneyPerSecond + '$</p>'
+        document.getElementById('ValueOfClick').innerHTML = '<p>+' + MoneyPerClick + '$</p>'
 
         switch (index) {
             case 1:
@@ -119,3 +130,4 @@ function upgrade3() {
     document.getElementById('secondup').innerHTML = '<p>' + SecondCost + '$</p>'
     document.getElementById('thirdup').innerHTML = '<p>' + ThirdCost + '$</p>'
     document.getElementById('persecond').innerHTML = '<p>+' + MoneyPerSecond + '$</p>'
+    document.getElementById('ValueOfClick').innerHTML = '<p>+' + MoneyPerClick + '$</p>'
