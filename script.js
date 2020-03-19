@@ -2,7 +2,8 @@
 
 var MoneyPerClick = 1,                                                      //количество денег, прибавляющееся на клик
     Money = 0,                                                              //Общее количество денег
-    MoneyPerSecond = 0,                                           
+    MoneyPerSecond = 0,
+    TimeCost = 10,                                           
     index,                                                                  //индекс апгрейда
     ValueOfPerSecond;
 
@@ -14,12 +15,38 @@ function clicking() {                                                       //ф
 }
 
 var time = 1000;
+var Level_Of_TimerUpgrade = 0
 
-function TimerUpgrade(){
-    time = Math.round(time/2);
+function TimerUpgrade(){  //Ускоряет время на 30 секунд
+
+    Level_of_fist_upgrade++
+    TimeCost = count(TimeCost, Level_of_fist_upgrade)
+
     clearInterval(timerId);
-    timerId = setInterval(() => persecond(), time);
-    console.log(time)
+    timerId = setInterval(() => persecond(), 500);
+
+    setTimeout(back, 30000); //возвращает старый интервал через 30 секунд
+    setTimeout(timer, 0); //запуск таймера
+
+    var T = 29 //обратный отсчёт от 29
+
+    function timer(){
+        
+        var TimerID_for_timer = setInterval(() => otschet(), 1000);
+        function otschet(){
+            document.getElementById('TimeCost').innerHTML = T;
+            T = T - 1;
+            if (T < 0){
+                clearInterval(TimerID_for_timer);
+                document.getElementById('TimeCost').innerHTML = '<p>' + TimeCost + '$</p>'
+            }
+        }
+    }
+
+    function back(){
+        clearInterval(timerId);
+        timerId = setInterval(() => persecond(), time);
+    }
 }
 
 var timerId = setInterval(() => persecond(), time);
@@ -27,8 +54,7 @@ var timerId = setInterval(() => persecond(), time);
 function persecond() {                                                      //Доход в секунду
 
     Money = Money + MoneyPerSecond
-    document.getElementById('money').innerHTML = '<p>' + Money + '$</p>'
-    console.log(timerId)  
+    document.getElementById('money').innerHTML = '<p>' + Money + '$</p>' 
 
 }
 
@@ -67,21 +93,14 @@ function update(Cost, Value, Level, PerSecondValue, index) {                //ф
 
         switch (index) {
             case 1:
-                Level_of_fist_upgrade++;
                 FirstCost = Cost;
-                document.getElementById('firstup').innerHTML = '<p>' + FirstCost + '$</p>'
                 break;
             case 2:
-                Level_of_second_upgrade++;
                 SecondCost = Cost;
-                document.getElementById('secondup').innerHTML = '<p>' + SecondCost + '$</p>'
                 break;
             case 3:
-                Level_of_third_upgrade++;
                 ThirdCost = Cost;
-                document.getElementById('thirdup').innerHTML = '<p>' + ThirdCost + '$</p>'
                 break;
-
         }
     } else {
         error()
@@ -97,6 +116,8 @@ function upgrade1() {
     index = 1;
     ValueOfPerSecond = 1;
     update(FirstCost, FirstValue, Level_of_fist_upgrade, ValueOfPerSecond, index);
+    Level_of_fist_upgrade++;
+    document.getElementById('firstup').innerHTML = '<p>' + FirstCost + '$</p>'
 
 }
 
@@ -110,6 +131,8 @@ function upgrade2() {
     index = 2
     ValueOfPerSecond = 3
     update(SecondCost, SecondValue, Level_of_second_upgrade, ValueOfPerSecond, index);
+    Level_of_second_upgrade++;
+    document.getElementById('secondup').innerHTML = '<p>' + SecondCost + '$</p>'
 
 }
 
@@ -122,6 +145,8 @@ function upgrade3() {
     index = 3
     ValueOfPerSecond = 7
     update(ThirdCost, ThirdValue, Level_of_third_upgrade, ValueOfPerSecond, index);
+    Level_of_third_upgrade++;
+    document.getElementById('thirdup').innerHTML = '<p>' + ThirdCost + '$</p>'
 
 }
 
@@ -131,3 +156,4 @@ function upgrade3() {
     document.getElementById('thirdup').innerHTML = '<p>' + ThirdCost + '$</p>'
     document.getElementById('persecond').innerHTML = '<p>+' + MoneyPerSecond + '$</p>'
     document.getElementById('ValueOfClick').innerHTML = '<p>+' + MoneyPerClick + '$</p>'
+    document.getElementById('TimeCost').innerHTML = '<p>' + TimeCost + '$</p>'
