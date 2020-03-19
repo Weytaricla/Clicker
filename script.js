@@ -3,7 +3,7 @@
 var MoneyPerClick = 1,                                                      //количество денег, прибавляющееся на клик
     Money = 0,                                                              //Общее количество денег
     MoneyPerSecond = 0,
-    TimeCost = 10,                                           
+    TimeCost = 100,                                                          // стоимость ускорения                                    
     index,                                                                  //индекс апгрейда
     ValueOfPerSecond;
 
@@ -15,38 +15,48 @@ function clicking() {                                                       //ф
 }
 
 var time = 1000;
-var Level_Of_TimerUpgrade = 0
+var Level_Of_TimerUpgrade = 0;
+var identity = 0 //для идентификации работы таймера
 
 function TimerUpgrade(){  //Ускоряет время на 30 секунд
 
-    Level_of_fist_upgrade++
-    TimeCost = count(TimeCost, Level_of_fist_upgrade)
+    identity = 1
 
-    clearInterval(timerId);
-    timerId = setInterval(() => persecond(), 500);
+    if (Money >= TimeCost){
 
-    setTimeout(back, 30000); //возвращает старый интервал через 30 секунд
-    setTimeout(timer, 0); //запуск таймера
+        Money = Money - TimeCost
+        Level_of_fist_upgrade++
+        TimeCost = count(TimeCost, Level_of_fist_upgrade)
 
-    var T = 29 //обратный отсчёт от 29
+        clearInterval(timerId);
+        timerId = setInterval(() => persecond(), 500);
 
-    function timer(){
+        setTimeout(back, 30000); //возвращает старый интервал через 30 секунд
+        setTimeout(timer, 0); //запуск таймера
+
+        var T = 29 //обратный отсчёт от 29
+
+        function timer(){
         
-        var TimerID_for_timer = setInterval(() => otschet(), 1000);
-        function otschet(){
-            document.getElementById('TimeCost').innerHTML = T;
-            T = T - 1;
-            if (T < 0){
-                clearInterval(TimerID_for_timer);
-                document.getElementById('TimeCost').innerHTML = '<p>' + TimeCost + '$</p>'
+            var TimerID_for_timer = setInterval(() => otschet(), 1000);
+            function otschet(){
+                document.getElementById('TimeCost').innerHTML = T;
+                T = T - 1;
+                if (T < 0){
+                    identity = 0;
+                    clearInterval(TimerID_for_timer);
+                    document.getElementById('TimeCost').innerHTML = '<p>' + TimeCost + '$</p>'
+                }
             }
         }
-    }
 
-    function back(){
-        clearInterval(timerId);
-        timerId = setInterval(() => persecond(), time);
-    }
+        function back(){
+            clearInterval(timerId);
+            timerId = setInterval(() => persecond(), time);
+        }
+    }else{
+        error()
+    }    
 }
 
 var timerId = setInterval(() => persecond(), time);
