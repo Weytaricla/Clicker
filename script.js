@@ -7,56 +7,81 @@ var MoneyPerClick = 1,                                                      //к
     index,                                                                  //индекс апгрейда
     ValueOfPerSecond;
 
+var i = 1
+
 function clicking() {                                                       //функцйия нажатия на кнопку клика
 
     Money = Money + MoneyPerClick;
-    document.getElementById('money').innerHTML = '<p>' + Money + '$</p>'
+    document.getElementById('money').innerHTML = '<p>' + num(Money) + '$</p>'
 
+}
+
+function num(x){
+    if (x < 1000){
+            return x;
+    }
+    if (x >= 1000 && x < 1000000){
+            x = x/1000;
+            x = Math.floor(x * 100) / 100; 
+            return (x + "k")
+    }
+    if (x >= 1000000 && x < 1000000000) {
+        x = x/1000000;
+        x = Math.floor(x * 100) / 100; 
+        return (x + "M")
+    }
+    if (x >= 1000000000 && x < 1000000000000) {
+        x = x/1000000000;
+        x = Math.floor(x * 100) / 100; 
+        return (x + "B")
+    }
 }
 
 var time = 1000;
 var Level_Of_TimerUpgrade = 0;
-var identity = 0 //для идентификации работы таймера
+var identity = 1 //для идентификации работы таймера
 
 function TimerUpgrade(){  //Ускоряет время на 30 секунд
 
-    identity = 1
+    if(identity !== 0){
+        if (Money >= TimeCost && identity !== 0){
 
-    if (Money >= TimeCost){
+            Money = Money - TimeCost
+            TimeCost = TimeCost*2
 
-        Money = Money - TimeCost
-        Level_of_fist_upgrade++
-        TimeCost = count(TimeCost, Level_of_fist_upgrade)
+            clearInterval(timerId);
+            timerId = setInterval(() => persecond(), 500);
 
-        clearInterval(timerId);
-        timerId = setInterval(() => persecond(), 500);
+            setTimeout(back, 30000); //возвращает старый интервал через 30 секунд
+            setTimeout(timer, 0); //запуск таймера
 
-        setTimeout(back, 30000); //возвращает старый интервал через 30 секунд
-        setTimeout(timer, 0); //запуск таймера
-
-        var T = 29 //обратный отсчёт от 29
+            var T = 29 //обратный отсчёт от 29
 
         function timer(){
         
-            var TimerID_for_timer = setInterval(() => otschet(), 1000);
-            function otschet(){
-                document.getElementById('TimeCost').innerHTML = T;
-                T = T - 1;
-                if (T < 0){
+                var TimerID_for_timer = setInterval(() => otschet(), 1000);
+                function otschet(){
                     identity = 0;
-                    clearInterval(TimerID_for_timer);
-                    document.getElementById('TimeCost').innerHTML = '<p>' + TimeCost + '$</p>'
+                    document.getElementById('TimeCost').innerHTML = T;
+                    T = T - 1;
+                    if (T < 0){
+                        identity = 1;
+                        clearInterval(TimerID_for_timer);
+                        document.getElementById('TimeCost').innerHTML = '<p>' + TimeCost + '$</p>'
+                    }
                 }
             }
-        }
 
-        function back(){
-            clearInterval(timerId);
-            timerId = setInterval(() => persecond(), time);
-        }
+            function back(){
+                clearInterval(timerId);
+                timerId = setInterval(() => persecond(), time);
+            }
+        }else{
+            error(1)
+        }   
     }else{
-        error()
-    }    
+        error(2)   
+    } 
 }
 
 var timerId = setInterval(() => persecond(), time);
@@ -64,13 +89,18 @@ var timerId = setInterval(() => persecond(), time);
 function persecond() {                                                      //Доход в секунду
 
     Money = Money + MoneyPerSecond
-    document.getElementById('money').innerHTML = '<p>' + Money + '$</p>' 
+    document.getElementById('money').innerHTML = '<p>' + num(Money) + '$</p>' 
 
 }
 
-function error() {                                                          //сообщение о нехватке ресурса
+function error(x) {                                                          //сообщение о нехватке ресурса
 
-    document.getElementById('error').innerHTML = '<p style="color: red">Недостаточно денег</p>'
+    switch (x){
+        case 1: document.getElementById('error').innerHTML = '<p style="color: red">Недостаточно денег</p>'
+        break;
+        case 2: document.getElementById('error').innerHTML = '<p style="color: red">цикл уже запущен</p>'
+        break
+    }
 
     setTimeout(cancel, 1000);
 
@@ -96,24 +126,31 @@ function update(Cost, Value, Level, PerSecondValue, index) {                //ф
         MoneyPerClick = MoneyPerClick + Value
         Level++
         Cost = count(Cost, Level)
-        document.getElementById('money').innerHTML = '<p>' + Money + '$</p>'
+        document.getElementById('money').innerHTML = '<p>' + num(Money) + '$</p>'
         MoneyPerSecond = MoneyPerSecond + PerSecondValue
-        document.getElementById('persecond').innerHTML = '<p>+' + MoneyPerSecond + '$</p>'
-        document.getElementById('ValueOfClick').innerHTML = '<p>+' + MoneyPerClick + '$</p>'
+        document.getElementById('persecond').innerHTML = '<p>+' + num(MoneyPerSecond) + '$</p>'
+        document.getElementById('ValueOfClick').innerHTML = '<p>+' + num(MoneyPerClick) + '$</p>'
 
         switch (index) {
             case 1:
                 FirstCost = Cost;
+                document.getElementById('lvl_1').innerHTML = '<p>X' + Level + '</p>'
                 break;
             case 2:
                 SecondCost = Cost;
+                document.getElementById('lvl_2').innerHTML = '<p>X' + Level + '</p>'
                 break;
             case 3:
                 ThirdCost = Cost;
+                document.getElementById('lvl_3').innerHTML = '<p>X' + Level + '</p>'
                 break;
+            case 4:
+                FourthCost = Cost;
+                document.getElementById('lvl_4').innerHTML = '<p>X' + Level + '</p>'
+                break
         }
     } else {
-        error()
+        error(1)
     }
 }
 
@@ -121,13 +158,13 @@ var FirstCost = 10,
     FirstValue = 1,
     Level_of_fist_upgrade = 0;       
 
-function upgrade1() {                                                        
+function upgrade1() {                                                                  //апгрейды
 
     index = 1;
     ValueOfPerSecond = 1;
     update(FirstCost, FirstValue, Level_of_fist_upgrade, ValueOfPerSecond, index);
     Level_of_fist_upgrade++;
-    document.getElementById('firstup').innerHTML = '<p>' + FirstCost + '$</p>'
+    document.getElementById('firstup').innerHTML = '<p>' + num(FirstCost) + '$</p>'
 
 }
 
@@ -142,7 +179,7 @@ function upgrade2() {
     ValueOfPerSecond = 3
     update(SecondCost, SecondValue, Level_of_second_upgrade, ValueOfPerSecond, index);
     Level_of_second_upgrade++;
-    document.getElementById('secondup').innerHTML = '<p>' + SecondCost + '$</p>'
+    document.getElementById('secondup').innerHTML = '<p>' + num(SecondCost) + '$</p>'
 
 }
 
@@ -156,7 +193,21 @@ function upgrade3() {
     ValueOfPerSecond = 7
     update(ThirdCost, ThirdValue, Level_of_third_upgrade, ValueOfPerSecond, index);
     Level_of_third_upgrade++;
-    document.getElementById('thirdup').innerHTML = '<p>' + ThirdCost + '$</p>'
+    document.getElementById('thirdup').innerHTML = '<p>' + num(ThirdCost) + '$</p>'
+
+}
+
+var FourthCost = 70,
+    FourthValue = 10,
+    Level_of_fourth_upgrade = 0;
+
+function upgrade4() {
+
+    index = 4
+    ValueOfPerSecond = 15
+    update(FourthCost, FourthValue, Level_of_fourth_upgrade, ValueOfPerSecond, index);
+    Level_of_fourth_upgrade++;
+    document.getElementById('fourthup').innerHTML = '<p>' + num(FourthCost) + '$</p>'
 
 }
 
@@ -164,6 +215,34 @@ function upgrade3() {
     document.getElementById('firstup').innerHTML = '<p>' + FirstCost + '$</p>'
     document.getElementById('secondup').innerHTML = '<p>' + SecondCost + '$</p>'
     document.getElementById('thirdup').innerHTML = '<p>' + ThirdCost + '$</p>'
+    document.getElementById('fourthup').innerHTML = '<p>' + FourthCost + '$</p>'
     document.getElementById('persecond').innerHTML = '<p>+' + MoneyPerSecond + '$</p>'
     document.getElementById('ValueOfClick').innerHTML = '<p>+' + MoneyPerClick + '$</p>'
     document.getElementById('TimeCost').innerHTML = '<p>' + TimeCost + '$</p>'
+
+
+
+
+
+
+
+
+Upgrades_val
+function X1(){
+    document.getElementById('firstup').innerHTML = '<p>' + FirstCost + '$</p>'
+    document.getElementById('secondup').innerHTML = '<p>' + SecondCost + '$</p>'
+    document.getElementById('thirdup').innerHTML = '<p>' + ThirdCost + '$</p>'
+    document.getElementById('thirdup').innerHTML = '<p>' + FourthCost + '$</p>'
+}
+
+function X5(){
+    document.getElementById('firstup').innerHTML = '<p>' + 5 * FirstCost + '$</p>'
+    document.getElementById('secondup').innerHTML = '<p>' + 5 * SecondCost + '$</p>'
+    document.getElementById('thirdup').innerHTML = '<p>' + 5 * ThirdCost + '$</p>'
+}
+
+function X10(){
+    document.getElementById('firstup').innerHTML = '<p>' + 10 * FirstCost + '$</p>'
+    document.getElementById('secondup').innerHTML = '<p>' + 10 * SecondCost + '$</p>'
+    document.getElementById('thirdup').innerHTML = '<p>' + 10 * ThirdCost + '$</p>'
+}

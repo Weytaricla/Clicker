@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="/style/css.css">
 </head>
 
-<body>
+<body onload="">
   <div class="background">
     <div class="name">
       <div class="bank">
@@ -19,60 +19,71 @@
       <div class="clearfix"></div>
       <div class="upgrades">
         <div onclick="upgrade1()" onmousedown="return false" class="unit">
-          <div class="button name">Upgrade1
+          <div class="name">
+            <div class="button name">Upgrade1</div>
+            <div class="window" id="lvl_1">-</div>
           </div>
           <div class="window" id="firstup"></div>
         </div>
         <div onclick="upgrade2()" onmousedown="return false" class="unit">
-          <div class="button name"">Upgrade2</div>
+          <div class="name">
+            <div class="button name"">Upgrade2</div>
+            <div class="window" id="lvl_2">-</div>
+          </div>
           <div class=" window" id="secondup"></div>
         </div>
         <div onclick="upgrade3()" onmousedown="return false" class="unit">
-          <div class="button name">Upgrade3</div>
+          <div class="name">
+            <div class="button name">Upgrade3</div>
+            <div class="window" id="lvl_3">-</div>
+          </div>
           <div class="window" id="thirdup"></div>
         </div>
-        <div onclick="" onmousedown="return false" class="unit">
-          <div class="button name">Upgrade4</div>
-          <div class="window" id="firstup"></div>
+        <div onclick="upgrade4()" onmousedown="return false" class="unit">
+          <div class="name">
+            <div class="button name">Upgrade4</div>
+            <div class="window" id="lvl_4">-</div>
+          </div>
+          <div class="window" id="fourthup"></div>
         </div>
         <div onclick="" onmousedown="return false" class="unit">
           <div class="button name"">Upgrade5</div>
-          <div class=" window" id="secondup"></div>
+          <div class=" window" id="fifthup"></div>
         </div>
         <div onclick="" onmousedown="return false" class="unit">
           <div class="button name">Upgrade6</div>
-          <div class="window" id="thirdup"></div>
+          <div class="window" id="sixhup"></div>
         </div>
         <div onclick="" onmousedown="return false" class="unit">
           <div class="button name">Upgrade7</div>
-          <div class="window" id="firstup"></div>
+          <div class="window" id="seventhup"></div>
         </div>
         <div onclick="" onmousedown="return false" class="unit">
           <div class="button name"">Upgrade8</div>
-        <div class=" window" id="secondup"></div>
+        <div class=" window" id="eightup"></div>
         </div>
         <div onclick="" onmousedown="return false" class="unit">
           <div class="button name">Upgrade9</div>
-          <div class="window" id="thirdup"></div>
+          <div class="window" id="ninthup"></div>
         </div>
       </div>
     </div>
     <div class="window">
       <div>Клик</div>
-      <div id="ValueOfClick"></div>
+      <div class="bank" style="text-align: right;" id="ValueOfClick"></div>
       <div>В секунду</div>
       <div id="persecond"></div>
       <div id="error">Кликай кнопку</div>
       <div class="clickbutton" onmousedown="return false" onclick="clicking()">Клик</div>
       <p>Ускортиь на 30 секунд</p>
-      <div onclick="TimerUpgrade()" style="margin-top: 10px;"  onmousedown="return false" class="unit">
+      <div onclick="TimerUpgrade()" style="margin-top: 10px;" onmousedown="return false" class="unit">
         <div class="button name">Время Х2</div>
         <div class="window" id="TimeCost"></div>
       </div>
       <div class="koefficenti">
-        <button id="x1">1</button>
-        <button id="x5">5</button>
-        <button id="x10">10</button>
+        <button id="x1" onclick="X1()">1</button>
+        <button id="x5" onclick="X5()">5</button>
+        <button id="x10" onclick="X10()">10</button>
       </div>
     </div>
     <script src="/script.js"></script>
